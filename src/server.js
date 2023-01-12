@@ -1,27 +1,37 @@
+require('dotenv').config()
 const express = require('express')
 //import express from 'express';
-const path = require('path')
-require('dotenv').config()
+const configViewEngine = require('./config/viewEngine');
 
-// console.log(">>> check env: " , process.env);
 
 const app = express()
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
+const webRoutes = require('./routes/web');
+
+const connection = require('./config/database');
+
+//config req.body
+app.use(express.json()); // Used to parse JSON bodies
+app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
+
+
 //config template engine
-app.set('views',path.join(__dirname,'views'));
-app.set('view engine', 'ejs')
-// config static file
-app.use(express.static(path.join(__dirname,'public'))) 
+configViewEngine(app);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-app.get('/name', (req, res) => {
-  // res.send('<h1> My fullname is Nguyen Van Quyet & Nodemon</h1>')
-  res.render('sample.ejs');
-})
+app.use('/', webRoutes);//('tien to : duong link dung de phan biet hoac tao ra cac route')
 
-app.listen(port, hostname,() => {
+
+
+// simple query
+// connection.query(
+//   'SELECT * FROM Users u',
+//   function(err, results, fields) {
+//     console.log("=========> Results = : ", results); // results contains rows returned by server
+//   }
+// );
+
+
+app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`)
 })
