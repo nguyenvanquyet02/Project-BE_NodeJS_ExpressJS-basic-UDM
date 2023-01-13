@@ -61,3 +61,27 @@ legend {
 input {
     height: 23px;
 }
+
+table {
+    border-collapse: collapse;
+    width: 1200px;
+    margin: 50px auto;
+    border: 1px solid #000;
+
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #ccc;
+}
+
+.title {
+    margin: 30px;
+    margin-left: 100px;
+}

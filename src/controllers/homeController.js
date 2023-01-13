@@ -14,10 +14,17 @@ const getHomePage = (req, res) => {
 const getName = (req, res) => {
     res.render('sample.ejs');
 }
-const postCreateUsers = (req, res) => {
-    console.log("=====> req.body: ", req.body);
-    res.send('Hello Nguyen Van quyet');
+const postCreateUsers = async (req, res) => {
+    let { email, name, city } = req.body;
+    let [results, fields] = await connection.query(
+        `INSERT INTO Users(email, name, city)
+        VALUES(?, ?, ?)`, [email, name, city]
+    )
+    res.send('insert for succeed');
+}
+const getCreate = (req, res) => {
+    res.render('create.ejs');
 }
 module.exports = {
-    getHomePage, getName, postCreateUsers
+    getHomePage, getName, postCreateUsers, getCreate
 }

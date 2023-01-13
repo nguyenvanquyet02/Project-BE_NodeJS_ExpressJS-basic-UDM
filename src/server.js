@@ -11,7 +11,7 @@ const webRoutes = require('./routes/web');
 
 const connection = require('./config/database');
 
-//config req.body
+//config req.body giup lay data tu phia client
 app.use(express.json()); // Used to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
 
