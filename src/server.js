@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+
 //import express from 'express';
 const configViewEngine = require('./config/viewEngine');
 
@@ -21,7 +22,7 @@ configViewEngine(app);
 
 app.use('/', webRoutes);//('tien to : duong link dung de phan biet hoac tao ra cac route')
 
-
+connection();
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`)
 })
