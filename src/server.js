@@ -22,16 +22,6 @@ configViewEngine(app);
 app.use('/', webRoutes);//('tien to : duong link dung de phan biet hoac tao ra cac route')
 
 
-
-// simple query
-// connection.query(
-//   'SELECT * FROM Users u',
-//   function(err, results, fields) {
-//     console.log("=========> Results = : ", results); // results contains rows returned by server
-//   }
-// );
-
-
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`)
 })

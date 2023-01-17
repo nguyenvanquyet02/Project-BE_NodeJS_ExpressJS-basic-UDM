@@ -4,30 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create users</title>
+    <title>Update User</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
     <div class="topnav">
         <a href="/">Home</a>
-        <a class="active" href="/create">Add a user</a>
+        <a href="/create">Add a user</a>
     </div>
     <div class="form">
-        <form action="/create-users" method="post">
+
+        <form action="/update-users" method="post">
             <fieldset>
-                <legend>Add new Users</legend>
+                <legend> Update a User </legend>
+                <div class="input-group d-none">
+                    <label>ID: </label>
+                    <input type="text" name="userId" value="<%= userEdit.id%>">
+                </div>
                 <div class="input-group">
                     <label>Email: </label>
-                    <input type="text" name="email">
+                    <input type="text" name="email" value="<%= userEdit.email%>">
                 </div>
                 <div class="input-group">
                     <label>Name: </label>
-                    <input type="text" name="name">
+                    <input type="text" name="name" value="<%= userEdit.name%>">
                 </div>
                 <div class="input-group">
                     <label>City: </label>
-                    <input type="text" name="city">
+                    <input type="text" name="city" value="<%= userEdit.city%>">
                 </div>
                 <button class="add-users">Save</button>
             </fieldset>

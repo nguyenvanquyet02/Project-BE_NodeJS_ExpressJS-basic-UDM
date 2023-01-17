@@ -85,3 +85,11 @@ tr:hover {
     margin: 30px;
     margin-left: 100px;
 }
+
+.d-none {
+    display: none;
+}
+
+.a-margin {
+    margin-right: 12px;
+}

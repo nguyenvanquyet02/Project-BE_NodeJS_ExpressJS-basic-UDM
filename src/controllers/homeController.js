@@ -1,30 +1,45 @@
 const connection = require('../config/database');
-const getHomePage = (req, res) => {
-    // let users = [];
-    // connection.query(
-    //     'SELECT * FROM Users u',
-    //     function(err, results, fields) {
-    //         users = results;
-    //         console.log("users: ", users); // results contains rows returned by server
-    //         res.send(JSON.stringify(users));
-    //     }
-    //   );
-    return res.render('home.ejs');
+const { getAllUsers, getUserById, updateUserById, deleteUserById } = require('../services/CRUDservice');
+const getHomePage = async (req, res) => {
+    let results = await getAllUsers();
+    return res.render('home.ejs', { listUsers: results });
 }
 const getName = (req, res) => {
     res.render('sample.ejs');
 }
 const postCreateUsers = async (req, res) => {
-    let { email, name, city } = req.body;
+    let { email, name, city } = req.body;// req.body get data from clients
     let [results, fields] = await connection.query(
         `INSERT INTO Users(email, name, city)
         VALUES(?, ?, ?)`, [email, name, city]
     )
-    res.send('insert for succeed');
+    res.redirect('/');
 }
 const getCreate = (req, res) => {
     res.render('create.ejs');
 }
+// req.params lay id
+const getUpdate = async (req, res) => {
+    let userId = req.params.id;
+    let user = await getUserById(userId);
+    res.render('edit.ejs', { userEdit: user });
+}
+const postUpdateUsers = async (req, res) => {
+    let { userId, email, name, city } = req.body;
+    await updateUserById(email, name, city, userId);
+    res.redirect('/');
+}
+const postDeleteUser = async (req, res) => {
+    let userId = req.params.id;
+    let user = await getUserById(userId);
+    res.render('delete.ejs', { userEdit: user });
+}
+const postHandleRemoveUser = async (req, res) => {
+    let userId = req.body.userId;
+    await deleteUserById(userId);
+    res.redirect('/');
+}
 module.exports = {
-    getHomePage, getName, postCreateUsers, getCreate
+    getHomePage, getName, postCreateUsers, getCreate, getUpdate,
+    postUpdateUsers, postDeleteUser, postHandleRemoveUser
 }

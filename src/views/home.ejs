@@ -13,45 +13,40 @@
         <a class="active" href="/">Home</a>
         <a href="/create">Add a user</a>
     </div>
-
     <div class="title">
         <h2>List users</h2>
     </div>
+
     <table>
         <tr>
             <th>ID</th>
             <th>Email</th>
             <th>Name</th>
             <th>City</th>
+            <th>Actions</th>
         </tr>
-        <tr>
-            <td>Email</td>
-            <td>Griffin</td>
-            <td>$100</td>
-            <td>$100</td>
-
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>Griffin</td>
-            <td>$150</td>
-            <td>$100</td>
-
-        </tr>
-        <tr>
-            <td>Joe</td>
-            <td>Swanson</td>
-            <td>$300</td>
-            <td>$100</td>
-
-        </tr>
-        <tr>
-            <td>Cleveland</td>
-            <td>Brown</td>
-            <td>$250</td>
-            <td>$100</td>
-
-        </tr>
+        <% listUsers.forEach(function(user) { %>
+            <tr>
+                <td>
+                    <%= user.id %>
+                </td>
+                <td>
+                    <%= user.email %>
+                </td>
+                <td>
+                    <%= user.name %>
+                </td>
+                <td>
+                    <%= user.city %>
+                </td>
+                <td>
+                    <a href="/update/<%= user.id %>">Edit</a>
+                    <form action="/delete-user/<%= user.id %>" method="POST">
+                        <button>Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }); %>
     </table>
 
 </body>
