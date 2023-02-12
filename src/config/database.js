@@ -19,12 +19,15 @@ const dbState = [{
   label: "disconnecting"
 }];
 const connection = async () => {
-  try {
-    await mongoose.connect('mongodb://root:123456@localhost:27017');
-    const state = Number(mongoose.connection.readyState);
-    console.log(dbState.find(f => f.value == state).label, "to db");
-  } catch (error) {
-    handleError(error);
+
+  const options = {
+    user: process.env.DB_USER,
+    pass: process.env.DB_PASSWORD,
+    dbName: process.env.DB_NAME
   }
-}
-module.exports = connection; //exports ra de co the su dung duoc nhieu noi
+  await mongoose.connect(process.env.DB_HOST, options);
+  const state = Number(mongoose.connection.readyState);
+  console.log(dbState.find(f => f.value === state).label, "to db")
+
+};
+module.exports = connection;

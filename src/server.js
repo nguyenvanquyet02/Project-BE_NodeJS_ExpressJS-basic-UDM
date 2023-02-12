@@ -3,8 +3,6 @@ const express = require('express')
 
 //import express from 'express';
 const configViewEngine = require('./config/viewEngine');
-
-
 const app = express()
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
@@ -22,7 +20,15 @@ configViewEngine(app);
 
 app.use('/', webRoutes);//('tien to : duong link dung de phan biet hoac tao ra cac route')
 
-connection();
-app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+
+
+(async () => {
+  try {
+    await connection();
+    app.listen(port, hostname, () => {
+      console.log(`App listening on port ${port}`)
+    })
+  } catch (error) {
+    console.log('====> ERROR: ', error);
+  }
+})();
