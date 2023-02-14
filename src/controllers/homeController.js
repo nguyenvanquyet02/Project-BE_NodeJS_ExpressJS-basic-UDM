@@ -3,9 +3,10 @@ const { getAllUsers, getUserById, updateUserById, deleteUserById } = require('..
 const User = require('../models/user');
 
 
-const getHomePage = async (req, res) => {
-    let results = [];
-    return res.render('home.ejs', { listUsers: results });
+const getHomePage = async (req, res, next) => {
+    await User.find({})
+        .then(user => res.render('home.ejs', { listUsers: user }))
+        .catch(next)
 }
 const getName = (req, res) => {
     res.render('sample.ejs');
@@ -28,11 +29,15 @@ const getCreate = (req, res) => {
 const getUpdate = async (req, res) => {
     let userId = req.params.id;
     let user = await getUserById(userId);
-    res.render('edit.ejs', { userEdit: user });
+    // User.findById(req.params.id)
+    // .then(user => res.render('edit.ejs', { userEdit: user }))
+    // .catch(() => { })
+    res.render('edit.ejs', { userEdit: user })
 }
 const postUpdateUsers = async (req, res) => {
     let { userId, email, name, city } = req.body;
-    await updateUserById(email, name, city, userId);
+    // await updateUserById(email, name, city, userId);
+    await User.updateOne({ _id: userId }, { name, email, city });// fillter, nd update
     res.redirect('/');
 }
 const postDeleteUser = async (req, res) => {
@@ -42,7 +47,8 @@ const postDeleteUser = async (req, res) => {
 }
 const postHandleRemoveUser = async (req, res) => {
     let userId = req.body.userId;
-    await deleteUserById(userId);
+    // await deleteUserById(userId);
+    await User.deleteOne({ _id: userId });
     res.redirect('/');
 }
 module.exports = {
