@@ -28,12 +28,17 @@ const createArrayCustomersService = async (arr) => {
 const getAllUsersSercive = async (limit, page, queryString) => {
     let result = null;
     let skipp = (page - 1) * limit;
+    console.log('===> check limit: ', limit);
+    console.log('===> check page: ', page);
+    console.log('===> check queryString: ', queryString);
+
     try {
         if (limit && page) {
             const { filter } = aqp(queryString);// /name/ $regex 
             delete filter.page;
             console.log('===> check filter: ', filter);
             result = await Customer.find(filter).skip(skipp).limit(limit).exec();
+
         } else {
             result = await Customer.find({});
         }
